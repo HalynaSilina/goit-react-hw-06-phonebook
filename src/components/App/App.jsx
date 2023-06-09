@@ -1,5 +1,6 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ContactForm from '../ContactForm.jsx/ContactForm';
 import Filter from '../Filter.jsx/Filter';
 import ContactList from '../ContactList/ContactList';
@@ -20,18 +21,7 @@ const App = () => {
           <ContactList />
         </>
       )}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
     </Container>
   );
 };

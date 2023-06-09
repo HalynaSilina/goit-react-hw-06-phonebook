@@ -13,11 +13,29 @@ const ContactForm = () => {
   const handleInputChange = ({ target: { name, value } }) => {
     if (name === 'number')
       if (contacts.some(contact => contact.number === value))
-        return toast.error(`Number ${value} is also in your contact list!`);
+        toast.error(`Number ${value} is also in contacts`, {
+          position: 'top-left',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
       else setNumber(value);
     if (name === 'userName')
       if (contacts.some(contact => contact.name === value))
-        return toast.error(`${value} is also in your contact list!`);
+        toast.error(`${value} also in your list`, {
+          position: 'top-left',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
       else setUserName(value);
   };
 
