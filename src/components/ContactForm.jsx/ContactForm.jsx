@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { Form, Label, Input, Button } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
@@ -12,11 +13,11 @@ const ContactForm = () => {
   const handleInputChange = ({ target: { name, value } }) => {
     if (name === 'number')
       if (contacts.some(contact => contact.number === value))
-        return alert(`Number ${value} is also in your contact list!`);
+        return toast.error(`Number ${value} is also in your contact list!`);
       else setNumber(value);
     if (name === 'userName')
       if (contacts.some(contact => contact.name === value))
-        return alert(`${value} is also in your contact list!`);
+        return toast.error(`${value} is also in your contact list!`);
       else setUserName(value);
   };
 
