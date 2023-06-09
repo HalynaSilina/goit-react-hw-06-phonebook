@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Form, Label, Input, Button } from './ContactForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
+import { getContacts } from 'redux/selectors';
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
   const [userName, setUserName] = useState('');
   const [number, setNumber] = useState('');
-
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
   const handleInputChange = ({ target: { name, value } }) => {
-    if (name === 'userName') setUserName(value);
-    if (name === 'number') setNumber(value);
+    if (name === 'number')
+      if (contacts.some(contact => contact.number === value))
+        return alert(`Number ${value} is also in your contact list!`);
+      else setNumber(value);
+    if (name === 'userName')
+      if (contacts.some(contact => contact.name === value))
+        return alert(`${value} is also in your contact list!`);
+      else setUserName(value);
   };
 
   const reset = () => {
@@ -18,7 +27,7 @@ const ContactForm = ({ onSubmit }) => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    onSubmit(userName, number);
+    dispatch(addContact(userName, number));
     reset();
   };
 
@@ -31,7 +40,7 @@ const ContactForm = ({ onSubmit }) => {
           name="userName"
           value={userName}
           onChange={handleInputChange}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
@@ -51,10 +60,6 @@ const ContactForm = ({ onSubmit }) => {
       <Button type="submit">Add contact</Button>
     </Form>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
