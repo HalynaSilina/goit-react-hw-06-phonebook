@@ -11,6 +11,7 @@ const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const handleInputChange = ({ target: { name, value } }) => {
+    const normalizedValue= value.toLowerCase();
     if (name === 'number')
       if (contacts.some(contact => contact.number === value))
         toast.error(`Number ${value} is also in contacts`, {
@@ -25,7 +26,7 @@ const ContactForm = () => {
         });
       else setNumber(value);
     if (name === 'userName')
-      if (contacts.some(contact => contact.name === value))
+      if (contacts.some(contact => contact.name.toLowerCase() === normalizedValue))
         toast.error(`${value} also in your list`, {
           position: 'top-left',
           autoClose: 2000,
